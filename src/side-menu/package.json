@@ -1,0 +1,14 @@
+{
+  "name": "side-menu",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "build": "npx webpack --config webpack.config.js",
+    "serve": "npx static . -p 8081",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pldespaigne",
+  "license": "ISC"
+}
