@@ -20,19 +20,37 @@ export class SideMenu extends LitElement {
 
   plugin: PluginClient;
   buttons: ButtonData[];
+  selected: number;
 
   constructor() {
     super();
     this.buttons = [];
+    this.selected = -1;
     this.plugin = new PluginClient();
+    this.plugin.methods = ['addIcon', 'removeIcon', 'focusIcon'];
     this.plugin.onload(() => {
       this.plugin.call('app' as any, 'setStyle', 'height: 100%; width: 60px;');
     });
     connectIframe(this.plugin);
   }
 
-  handleClick(name: string) {
-    console.log(`You have clicked on ${name}`);
+  addIcon(name: string, icon: string) {
+    this.buttons.push({name, icon});
+    this.requestUpdate();
+  }
+  removeIcon(name: string) {
+    this.buttons = this.buttons.filter(button => button.name !== name);
+    this.requestUpdate();
+  }
+  focusIcon(name: string) {
+    const index = this.buttons.findIndex(button => button.name === name);
+    this.handleClick(name, index);
+  }
+
+  handleClick(name: string, index: number) {
+    this.selected = index;
+    this.plugin.emit('focus', name);
+    this.requestUpdate();
   }
 
   public render() {
@@ -45,14 +63,11 @@ export class SideMenu extends LitElement {
           overflow-x: hidden;
         "
       >
-        <div>
-          <button @click="${() => {this.buttons.push({icon: 'stars', name: 'plugin'+this.buttons.length}); this.requestUpdate();}}">+</button>
-          <button @click="${() => {this.buttons.pop(); this.requestUpdate();}}">-</button>
-        </div>
-        ${this.buttons.map(button => 
+        ${this.buttons.map((button, i) => 
           html`<menu-button
-            @click="${() => {this.handleClick(button.name)}}"
+            @click="${() => {this.handleClick(button.name, i)}}"
             icon="${button.icon}"
+            ?selected="${i === this.selected}"
           ></menu-button>`)
         }
       </div>

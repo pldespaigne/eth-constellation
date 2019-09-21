@@ -70,7 +70,7 @@ export class MenuButton extends LitElement {
       >
         <img
           style="width: 40px; height: 40px"
-          src="https://fonts.gstatic.com/s/i/materialicons/${this.icon}/v1/24px.svg"
+          src="${this.icon}"
         />
       </button>
     `;
