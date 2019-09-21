@@ -55,7 +55,7 @@ export class SystemPlugin extends Plugin {
     // TODO REMOVE THAT : this is a test of loading an external star plugin
     const sideMenu: StarProfile = {
       name: 'sideMenu',
-      methods: [],
+      methods: ['addIcon', 'removeIcon', 'focusIcon'],
       url: 'http://localhost:8081',
       location: 'app',
       requirements: [

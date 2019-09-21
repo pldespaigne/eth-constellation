@@ -2,8 +2,7 @@
 import {
   LitElement,
   html,
-  customElement,
-  property
+  customElement
 } from 'lit-element'
 
 import { PluginClient, connectIframe } from '@remixproject/plugin';
@@ -24,30 +23,39 @@ export class SideMenu extends LitElement {
 
   constructor() {
     super();
+
     this.buttons = [];
     this.selected = -1;
+
     this.plugin = new PluginClient();
     this.plugin.methods = ['addIcon', 'removeIcon', 'focusIcon'];
+
+    // binding methods
+    (this.plugin as any).addIcon = (name: string, icon: string) => {this.addIcon(name, icon)};
+    (this.plugin as any).removeIcon = (name: string) => {this.removeIcon(name)};
+    (this.plugin as any).focusIcon = (name: string) => {this.focusIcon(name)};
+
     this.plugin.onload(() => {
+      console.log('sideMenu ready');
       this.plugin.call('app' as any, 'setStyle', 'height: 100%; width: 60px;');
     });
     connectIframe(this.plugin);
   }
 
-  addIcon(name: string, icon: string) {
+  public addIcon(name: string, icon: string) {
     this.buttons.push({name, icon});
     this.requestUpdate();
   }
-  removeIcon(name: string) {
+  public removeIcon(name: string) {
     this.buttons = this.buttons.filter(button => button.name !== name);
     this.requestUpdate();
   }
-  focusIcon(name: string) {
+  public focusIcon(name: string) {
     const index = this.buttons.findIndex(button => button.name === name);
     this.handleClick(name, index);
   }
 
-  handleClick(name: string, index: number) {
+  private handleClick(name: string, index: number) {
     this.selected = index;
     this.plugin.emit('focus', name);
     this.requestUpdate();

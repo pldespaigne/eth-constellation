@@ -10,3 +10,5 @@ const systemProfile: Profile = {
   methods: ['registerIframe', 'activatePlugins'],
 }
 new SystemPlugin(systemProfile, engine);
+
+(window as any).engine = engine;
