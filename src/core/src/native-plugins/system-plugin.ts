@@ -64,5 +64,31 @@ export class SystemPlugin extends Plugin {
     }
     this.registerIframe(sideMenu);
     this.activatePlugins(sideMenu.name);
+
+    // TODO REMOVE THAT : this is a test of loading an external star plugin
+    const sidePanel: StarProfile = {
+      name: 'sidePanel',
+      methods: [],
+      url: 'http://localhost:8082',
+      location: 'app',
+      requirements: [
+        { name: 'app', methods: ['addView', 'setStyle'] }
+      ]
+    }
+    this.registerIframe(sidePanel);
+    this.activatePlugins(sidePanel.name);
+
+    // TODO REMOVE THAT : this is a test of loading an external star plugin
+    const mainPanel: StarProfile = {
+      name: 'mainPanel',
+      methods: [],
+      url: 'http://localhost:8083',
+      location: 'app',
+      requirements: [
+        { name: 'app', methods: ['addView', 'setStyle'] }
+      ]
+    }
+    this.registerIframe(mainPanel);
+    this.activatePlugins(mainPanel.name);
   }
 }
