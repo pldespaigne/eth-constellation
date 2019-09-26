@@ -1,11 +1,13 @@
-import { HostPlugin, HostProfile, Profile, Plugin } from "@remixproject/engine";
+import { Profile, Plugin } from "@remixproject/engine";
+import { NeutronStarPlugin } from "../neutron-star-plugin";
+import { StarProfile } from "../type";
 
-export class ViewHostPlugin extends Plugin {
+export class ViewHostPlugin extends NeutronStarPlugin {
 
   private container: Element;
   private views: Record<string, HTMLIFrameElement>;
 
-  constructor(profile: Profile, selector: string) {
+  constructor(profile: StarProfile, selector: string) {
     super(profile);
     this.container = document.querySelector(selector)!;
     this.views = {};

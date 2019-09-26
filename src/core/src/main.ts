@@ -1,13 +1,17 @@
 
 import { Profile } from '@remixproject/engine';
 import { SystemPlugin } from './native-plugins/system-plugin';
-import { CoreEngine } from './core-engine';
+import { NebulaEngine } from './nebula-engine';
+import { StarProfile } from './type';
 
 // Bootstrap Constellation
-const engine = new CoreEngine();
-const systemProfile: Profile = {
+const engine = new NebulaEngine();
+const systemProfile: StarProfile = {
   name: 'system',
-  methods: ['registerIframe', 'activatePlugins'],
+  methods: ['registerIframe', 'activatePlugins', 'performHandshake'],
+  url: '',
+  location: '',
+  requirements: []
 }
 new SystemPlugin(systemProfile, engine);
 
